@@ -10,6 +10,7 @@ abstract class AbstractTheme {
     this.cardColor,
     this.wrongColor,
     this.rightColor,
+    this.appShadows,
   );
 
   final Color backgroundColor;
@@ -18,4 +19,13 @@ abstract class AbstractTheme {
   final Color cardColor;
   final Color wrongColor;
   final Color rightColor;
+  final AppShadows appShadows;
+}
+abstract class AppShadows {
+  AppShadows(this.xLargeShadow, this.largeShadow, this.mediumShadow, this.baseShadow);
+
+  final BoxShadow xLargeShadow;
+  final BoxShadow largeShadow;
+  final BoxShadow mediumShadow;
+  final BoxShadow baseShadow;
 }

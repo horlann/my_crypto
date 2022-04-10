@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:my_crypto/data/api/models/remote_models/crypto_remote_model.dart';
 import 'package:my_crypto/domain/entities/crypto/crypto.dart';
 import 'package:my_crypto/internal/core/exceptions.dart';
+import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 
 abstract class IRemoteCryptoDataSource {
   Future<List<CryptoEntity>> getAllCryptos();
@@ -53,7 +54,7 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
 
     listWithCrypto = await getMetadata(listWithCrypto: listWithCrypto);
     if (response.statusCode == 200) {
-      return listWithCrypto;
+      return getHistoricalData(listWithCrypto: listWithCrypto);
     } else {
       throw ServerException;
     }
@@ -83,6 +84,40 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
         }
       });
     });
+    updatedList.sort((a, b) => b.marketCap.compareTo(a.marketCap));
+    return updatedList;
+  }
+
+  Future<List<CryptoEntity>> getHistoricalData({required List<CryptoEntity> listWithCrypto}) async {
+    List<CryptoEntity> updatedList = [];
+    List<String> slugs = [];
+    for (var element in listWithCrypto) {
+      slugs.add(element.slug);
+    }
+    var dio = Dio();
+    final response =
+    await dio.get('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=7',queryParameters: {'interval': 'hourly'},);
+    final data1 = (response.data['prices'] as List<dynamic>?)
+        ?.map((e) => (e as List<dynamic>).map((e) => e as num).toList())
+        .toList();
+
+    slugs.forEach((slug) async {
+      // final response =
+      //     await dio.get('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=30');
+      listWithCrypto.forEach((element) {
+        if (element.slug == slug) {
+          updatedList.add(element.copyWith(historicalPrices: data1));
+        }
+      });
+      // (response.data['prices'] as List<List<dynamic>>).forEach((key, value) {
+      //   listWithCrypto.forEach((element) {
+      //     if (element.id == key) {
+      //       updatedList.add(element.copyWith(imageLink: value['logo']));
+      //     }
+      //   });
+      // });
+    });
+
     updatedList.sort((a, b) => b.marketCap.compareTo(a.marketCap));
     return updatedList;
   }

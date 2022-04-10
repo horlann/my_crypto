@@ -1,38 +1,43 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:my_crypto/data/api/models/remote_models/historical_prices.dart';
 import 'package:my_crypto/data/api/models/remote_models/quote.dart';
+import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 
 part 'crypto_remote_model.g.dart';
 
 @JsonSerializable()
 class CryptoRemoteModel {
-  CryptoRemoteModel(
-      {required this.id,
-      required this.symbol,
-      required this.name,
-      required this.imageLink,
-      required this.currentPrice,
-      required this.marketCap,
-      required this.marketCapRank,
-      required this.fullyDilutedValuation,
-      required this.totalVolume,
-      required this.high24h,
-      required this.low24h,
-      required this.priceChange24h,
-      required this.priceChangePercentage24h,
-      required this.marketCapChange24h,
-      required this.marketCapChangePercentage24h,
-      required this.circulatingSupply,
-      required this.totalSupply,
-      required this.maxSupply,
-      required this.ath,
-      required this.athChangePercentage,
-      required this.athDate,
-      required this.atl,
-      required this.atlChangePercentage,
-      required this.atlDate,
-      required this.roi,
-      required this.lastUpdated,
-      required this.quote});
+  CryptoRemoteModel({
+    required this.id,
+    required this.symbol,
+    required this.name,
+    required this.slug,
+    required this.imageLink,
+    required this.currentPrice,
+    required this.marketCap,
+    required this.marketCapRank,
+    required this.fullyDilutedValuation,
+    required this.totalVolume,
+    required this.high24h,
+    required this.low24h,
+    required this.priceChange24h,
+    required this.priceChangePercentage24h,
+    required this.marketCapChange24h,
+    required this.marketCapChangePercentage24h,
+    required this.circulatingSupply,
+    required this.totalSupply,
+    required this.maxSupply,
+    required this.ath,
+    required this.athChangePercentage,
+    required this.athDate,
+    required this.atl,
+    required this.atlChangePercentage,
+    required this.atlDate,
+    required this.roi,
+    required this.lastUpdated,
+    required this.quote,
+    required this.historicalPrices,
+  });
 
   factory CryptoRemoteModel.fromJson(Map<String, dynamic> json) => _$CryptoRemoteModelFromJson(json);
 
@@ -41,9 +46,12 @@ class CryptoRemoteModel {
 
   @JsonKey(name: 'symbol', defaultValue: 'symbol')
   final String symbol;
-String get getSymbol=>symbol;
+
+  String get getSymbol => symbol;
   @JsonKey(name: 'name', defaultValue: 'name')
   final String name;
+  @JsonKey(name: 'slug', defaultValue: 'slug')
+  final String slug;
 
   @JsonKey(name: 'image', defaultValue: '')
   final String imageLink;
@@ -118,4 +126,6 @@ String get getSymbol=>symbol;
   final String lastUpdated;
   @JsonKey(name: 'quote', nullable: true)
   final Quote quote;
+  @JsonKey(name: 'prices', defaultValue: [])
+  final List<List<num>> historicalPrices;
 }

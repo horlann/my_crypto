@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: const [HomeRoute(), WalletRoute(), SettingsRoute(), WalletRoute()],
+      routes: const [HomeRouteScope(), WalletRoute(), SettingsRoute(), WalletRoute()],
       builder: (context, child, animation) {
         final themes = Provider.of<ThemesBloc>(context).theme;
 
@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
             body: child,
             bottomNavigationBar: Container(
               height: 50,
-              color: themes.backgroundColor.withOpacity(0.98),
+              color: themes.cardColor,
               child: Row(
                 children: [
                   Expanded(
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                             height: double.infinity,
                             color: Colors.transparent,
                             padding: const EdgeInsets.all(11),
-                            child: SvgPicture.asset('assets/svgIcons/home.svg'),
+                            child: SvgPicture.asset('assets/svgIcons/home.svg',color: themes.infoTextColor,),
                           ))),
                   Expanded(
                       child: GestureDetector(
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                             height: double.infinity,
                             color: Colors.transparent,
                             padding: const EdgeInsets.all(10),
-                            child: SvgPicture.asset('assets/svgIcons/arrow.svg'),
+                            child: SvgPicture.asset('assets/svgIcons/arrow.svg',color: themes.infoTextColor),
                           ))),
                   Expanded(
                       child: GestureDetector(
@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                             height: double.infinity,
                             color: Colors.transparent,
                             padding: const EdgeInsets.all(11),
-                            child: SvgPicture.asset('assets/svgIcons/user.svg'),
+                            child: SvgPicture.asset('assets/svgIcons/user.svg',color: themes.infoTextColor),
                           ))),
                 ],
               ),

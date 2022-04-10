@@ -1,11 +1,14 @@
 import 'package:my_crypto/data/api/models/remote_models/crypto_remote_model.dart';
+import 'package:my_crypto/data/api/models/remote_models/historical_prices.dart';
 import 'package:my_crypto/data/api/models/remote_models/quote.dart';
+import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 
 class CryptoEntity {
   CryptoEntity(
       {required this.id,
       required this.symbol,
       required this.name,
+      required this.slug,
       required this.imageLink,
       required this.currentPrice,
       required this.marketCap,
@@ -29,13 +32,15 @@ class CryptoEntity {
       required this.atlDate,
       required this.roi,
       required this.lastUpdated,
-      required this.quote
+      required this.quote,
+      required this.historicalPrices
       });
 
   factory CryptoEntity.fromRemoteModel({required CryptoRemoteModel remoteModel}) => CryptoEntity(
         id: remoteModel.id.toString(),
         symbol: remoteModel.symbol,
         name: remoteModel.name,
+      slug: remoteModel.slug,
         imageLink: remoteModel.imageLink,
         currentPrice: remoteModel.quote.inUsd.price,
         marketCap: remoteModel.quote.inUsd.marketCap,
@@ -62,13 +67,15 @@ class CryptoEntity {
         lastUpdated: DateTime.now(),
         marketCapChangePercentage24h: remoteModel.marketCapChangePercentage24h,
         marketCapRank: remoteModel.marketCapRank,
-      quote:remoteModel.quote
+      quote:remoteModel.quote,
+      historicalPrices:remoteModel.historicalPrices
       );
 
   CryptoEntity copyWith({
     String? id,
     String? symbol,
     String? name,
+    String? slug,
     String? imageLink,
     num? marketCap,
     num? currentPrice,
@@ -93,13 +100,13 @@ class CryptoEntity {
     num? roi,
     DateTime? lastUpdated,
     Quote? quote,
-
-    // List<dynamic>? exchangeCourse,
+    List<List<num>>? historicalPrices
   }) {
     return CryptoEntity(
         id: id ?? this.id,
         symbol: symbol ?? this.symbol,
         name: name ?? this.name,
+        slug: slug ?? this.slug,
         imageLink: imageLink ?? this.imageLink,
         marketCap: marketCap ?? this.marketCap,
         currentPrice: currentPrice ?? this.currentPrice,
@@ -123,13 +130,15 @@ class CryptoEntity {
         atlDate: atlDate ?? this.atlDate,
         roi: roi ?? this.roi,
         lastUpdated: lastUpdated ?? this.lastUpdated,
-        quote: quote ?? this.quote
+        quote: quote ?? this.quote,
+        historicalPrices: historicalPrices ?? this.historicalPrices
     );
   }
 
   final String id;
   final String symbol;
   final String name;
+  final String slug;
   final String imageLink;
   final num currentPrice;
   final num marketCap;
@@ -154,5 +163,6 @@ class CryptoEntity {
   final dynamic roi;
   final DateTime lastUpdated;
   final Quote quote;
+  final List<List<num>> historicalPrices;
 
 }

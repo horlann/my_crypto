@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 
 class LightTheme implements AbstractTheme {
@@ -20,4 +21,20 @@ class LightTheme implements AbstractTheme {
 
   @override
   Color get rightColor => const Color(0xFF24ad65);
+  @override
+  AppShadows get appShadows => _LightAppShadows();
+}
+class _LightAppShadows implements AppShadows {
+  @override
+  BoxShadow xLargeShadow = BoxShadow(
+      color: const Color(0xff000000).withOpacity(0.12), offset: const Offset(0, 4), blurRadius: 4, spreadRadius: 0);
+  @override
+  BoxShadow largeShadow = BoxShadow(
+      color: const Color(0xff000000).withOpacity(0.16), offset: const Offset(0, 2), blurRadius: 8, spreadRadius: 0);
+  @override
+  BoxShadow mediumShadow = BoxShadow(
+      color: const Color(0xff000000).withOpacity(0.1), offset: const Offset(0, 7), blurRadius: 4, spreadRadius: 0);
+  @override
+  BoxShadow baseShadow = BoxShadow(
+      color: const Color(0xff000000).withOpacity(0.15), offset: const Offset(0, 0), blurRadius: 2, spreadRadius: 0);
 }

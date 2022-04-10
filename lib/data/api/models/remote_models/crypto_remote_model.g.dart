@@ -11,6 +11,7 @@ CryptoRemoteModel _$CryptoRemoteModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int? ?? 0,
       symbol: json['symbol'] as String? ?? 'symbol',
       name: json['name'] as String? ?? 'name',
+      slug: json['slug'] as String? ?? 'slug',
       imageLink: json['image'] as String? ?? '',
       currentPrice: json['current_price'] as num? ?? 0,
       marketCap: json['market_cap'] as num? ?? 0,
@@ -37,6 +38,10 @@ CryptoRemoteModel _$CryptoRemoteModelFromJson(Map<String, dynamic> json) =>
       roi: json['roi'] ?? 0,
       lastUpdated: json['last_updated'] as String? ?? '',
       quote: Quote.fromJson(json['quote'] as Map<String, dynamic>),
+      historicalPrices: (json['prices'] as List<dynamic>?)
+              ?.map((e) => (e as List<dynamic>).map((e) => e as num).toList())
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$CryptoRemoteModelToJson(CryptoRemoteModel instance) =>
@@ -44,6 +49,7 @@ Map<String, dynamic> _$CryptoRemoteModelToJson(CryptoRemoteModel instance) =>
       'id': instance.id,
       'symbol': instance.symbol,
       'name': instance.name,
+      'slug': instance.slug,
       'image': instance.imageLink,
       'current_price': instance.currentPrice,
       'market_cap': instance.marketCap,
@@ -68,4 +74,5 @@ Map<String, dynamic> _$CryptoRemoteModelToJson(CryptoRemoteModel instance) =>
       'roi': instance.roi,
       'last_updated': instance.lastUpdated,
       'quote': instance.quote,
+      'prices': instance.historicalPrices,
     };

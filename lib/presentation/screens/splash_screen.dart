@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 2)).then((value) {
-      appRouter.replaceNamed('app');
+      appRouter.replaceNamed('mainRoute');
     });
     super.initState();
   }
@@ -25,22 +25,22 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Builder(
-        builder: (context) {
-          final ThemesBloc bloc = BlocProvider.of<ThemesBloc>(context);
+      builder: (context) {
+        final ThemesBloc bloc = BlocProvider.of<ThemesBloc>(context);
 
-          return Scaffold(
-            body: Container(
-              color: bloc.theme.backgroundColor,
-              child: Center(
-                  child: GestureDetector(
-                child: Text("Splash"),
-                onTap: () {
+        return Scaffold(
+          body: Container(
+            color: bloc.theme.backgroundColor,
+            child: Center(
+                child: GestureDetector(
+              child: Text("Splash"),
+              onTap: () {
                 //  appRouter.push(Selector());
-                },
-              )),
-            ),
-          );
-        },
+              },
+            )),
+          ),
+        );
+      },
     );
   }
 }

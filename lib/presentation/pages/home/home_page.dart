@@ -1,9 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_crypto/internal/navigation/router.gr.dart';
+import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/crypto/crypto/crypto_bloc.dart';
 import 'package:my_crypto/presentation/blocs/crypto/crypto/crypto_event.dart';
 import 'package:my_crypto/presentation/blocs/crypto/crypto/crypto_state.dart';
+import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -29,32 +33,36 @@ class HomePage extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            // print(state.data[index].);
+                            appRouter.pushNamed('cryptoView');
                           },
                           child: Container(
                               height: 75,
                               decoration: BoxDecoration(
+                                boxShadow: [theme.appShadows.mediumShadow],
                                   color: theme.cardColor, borderRadius: const BorderRadius.all(Radius.circular(16))),
                               padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               child: Row(
                                 children: [
-                                  Expanded( flex: 9,
+                                 Expanded(
+                                      flex: 9,
                                       child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Container(
                                               clipBehavior: Clip.hardEdge,
                                               decoration: const BoxDecoration(shape: BoxShape.circle),
                                               child: Image.network(state.data[index].imageLink)))),
-                                  Expanded( flex: 10,
+                                  Expanded(
+                                    flex: 10,
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             "${state.data[index].name} ",
+                                            maxLines: 1,
                                             style: TextStyle(color: theme.infoTextColor, fontSize: 18),
                                           ),
                                           const SizedBox(
@@ -68,7 +76,9 @@ class HomePage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  Expanded( flex: 10,child: Container()),
+                                  Expanded(
+                                      flex: 10,
+                                      child: MiniChartBuilder(chartData: state.data[index].historicalPrices)),
                                   Expanded(
                                     flex: 12,
                                     child: Align(
