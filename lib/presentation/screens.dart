@@ -26,7 +26,7 @@ class _ScreenSelectorState extends State<ScreenSelector> {
           return AutoRouter(
             placeholder: (BuildContext context) {
               return Container(
-                color: theme.activityBackgroundColor,
+                color: theme.backgroundColor,
               );
             },
           );

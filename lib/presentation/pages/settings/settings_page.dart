@@ -38,7 +38,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Container(
               width: double.infinity,
               alignment: Alignment.center,
-              color: themes.theme.activityBackgroundColor,
+              color: themes.theme.backgroundColor,
               child: BlocConsumer<SettingsBloc, SettingsState>(
                 listener: (context, state) {},
                 bloc: bloc,

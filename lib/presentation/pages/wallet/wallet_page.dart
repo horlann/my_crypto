@@ -11,7 +11,7 @@ class WalletPage extends StatelessWidget {
     final themes =Provider.of<ThemesBloc>(context).theme;
 
     return Container(
-      color: themes.activityBackgroundColor,
+      color: themes.backgroundColor,
       child: Center(child: Text(easy_local.tr('wallet'),style: TextStyle(color: Colors.amber),)),
     );
   }

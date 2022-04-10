@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
           return Scaffold(
             body: Container(
-              color: bloc.theme.activityBackgroundColor,
+              color: bloc.theme.backgroundColor,
               child: Center(
                   child: GestureDetector(
                 child: Text("Splash"),

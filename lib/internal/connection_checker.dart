@@ -2,17 +2,18 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rxdart/rxdart.dart';
 
+@singleton
 class ConnectionChecker {
-  ConnectionChecker._() {
+  ConnectionChecker() {
     _globalConnectionStream = BehaviorSubject<bool>();
     _connectionStream = Connectivity().onConnectivityChanged;
     _initStatus();
   }
 
-  static final ConnectionChecker instance = ConnectionChecker._();
   static const Duration defaultTimeout = Duration(seconds: 10);
   static const int defaultPort = 53;
   late BehaviorSubject<bool> _globalConnectionStream;
@@ -24,10 +25,13 @@ class ConnectionChecker {
   ConnectivityResult get currentConnectivityState => _currentConnectivityState;
   ConnectivityResult _currentConnectivityState = ConnectivityResult.none;
 
+  bool get isConnected => _isConnected;
+  bool _isConnected = false;
+
   Future<void> _initStatus() async {
     InternetConnectionChecker().addresses = _ourServerAddress;
     InternetConnectionChecker().checkInterval = const Duration(seconds: 10);
-    _globalConnectionStream.sink.add(await isConnected);
+    _globalConnectionStream.sink.add(await isConnectedCheck);
     await _connectionStream.transform(_transformer()).pipe(_globalConnectionStream);
   }
 
@@ -39,7 +43,7 @@ class ConnectionChecker {
     }
   }
 
-  Future<bool> get isConnected async {
+  Future<bool> get isConnectedCheck async {
     final ConnectivityResult status = await Connectivity().checkConnectivity();
 
     switch (status) {
@@ -60,9 +64,12 @@ class ConnectionChecker {
           _wifiConnectionStream = InternetConnectionChecker().onStatusChange.listen((event) async {
             switch (event) {
               case InternetConnectionStatus.disconnected:
+                _isConnected = false;
+
                 sink.add(false);
                 break;
               case InternetConnectionStatus.connected:
+                _isConnected = true;
                 sink.add(true);
                 break;
             }
