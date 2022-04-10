@@ -1,17 +1,13 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:my_crypto/data/api/models/remote_models/historical_prices.dart';
-import 'package:my_crypto/data/api/models/remote_models/quote.dart';
-import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 
-part 'crypto_remote_model.g.dart';
+part 'crypto_remote_model_from_coinGecko.g.dart';
 
 @JsonSerializable()
-class CryptoRemoteModel {
-  CryptoRemoteModel({
+class CryptoRemoteModelFromCoinGecko {
+  CryptoRemoteModelFromCoinGecko({
     required this.id,
     required this.symbol,
     required this.name,
-    required this.slug,
     required this.imageLink,
     required this.currentPrice,
     required this.marketCap,
@@ -35,23 +31,19 @@ class CryptoRemoteModel {
     required this.atlDate,
     required this.roi,
     required this.lastUpdated,
-    required this.quote,
-    required this.historicalPrices,
   });
 
-  factory CryptoRemoteModel.fromJson(Map<String, dynamic> json) => _$CryptoRemoteModelFromJson(json);
+  factory CryptoRemoteModelFromCoinGecko.fromJson(Map<String, dynamic> json) =>
+      _$CryptoRemoteModelFromCoinGeckoFromJson(json);
 
-  @JsonKey(name: 'id', defaultValue: 0)
-  final int id;
+  @JsonKey(name: 'id', defaultValue: '')
+  final String id;
 
   @JsonKey(name: 'symbol', defaultValue: 'symbol')
   final String symbol;
 
-  String get getSymbol => symbol;
   @JsonKey(name: 'name', defaultValue: 'name')
   final String name;
-  @JsonKey(name: 'slug', defaultValue: 'slug')
-  final String slug;
 
   @JsonKey(name: 'image', defaultValue: '')
   final String imageLink;
@@ -124,8 +116,4 @@ class CryptoRemoteModel {
 
   @JsonKey(name: 'last_updated', defaultValue: '')
   final String lastUpdated;
-  @JsonKey(name: 'quote', nullable: true)
-  final Quote quote;
-  @JsonKey(name: 'prices', defaultValue: [])
-  final List<List<num>> historicalPrices;
 }

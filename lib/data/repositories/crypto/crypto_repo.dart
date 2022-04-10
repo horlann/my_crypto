@@ -16,7 +16,8 @@ class CryptoRemoteRepo extends ICryptoRepo {
   Future<Either<Failure, List<CryptoEntity>>> getAllCryptos() async {
     if (getIt.get<ConnectionChecker>().isConnected) {
       try {
-        return Right(await remoteDataSource.getAllCryptos());
+        List<CryptoEntity> cryptoList = await remoteDataSource.getAllCryptos();
+        return Right(cryptoList);
       } on ServerFailure {
         return Left(ServerFailure());
       }

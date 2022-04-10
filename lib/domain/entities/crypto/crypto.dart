@@ -1,7 +1,5 @@
-import 'package:my_crypto/data/api/models/remote_models/crypto_remote_model.dart';
-import 'package:my_crypto/data/api/models/remote_models/historical_prices.dart';
+import 'package:my_crypto/data/api/models/remote_models/coin_market_cap/crypto_remote_model.dart';
 import 'package:my_crypto/data/api/models/remote_models/quote.dart';
-import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 
 class CryptoEntity {
   CryptoEntity(

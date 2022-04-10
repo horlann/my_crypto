@@ -7,20 +7,20 @@ class MiniChartBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: double.infinity,
-        child: SfCartesianChart(
-          margin: EdgeInsets.zero,
-            tooltipBehavior: TooltipBehavior(enable: false),
-borderColor: Colors.transparent,
-            plotAreaBorderWidth: 0,
-            primaryXAxis: NumericAxis(
-              axisBorderType: AxisBorderType.withoutTopAndBottom,
-
-              axisLine: const AxisLine(width: 0),
-              isVisible: false,
-              borderWidth: 0,
-              majorGridLines: const MajorGridLines(
+        child: chartData.length != 0
+            ? SfCartesianChart(
+                margin: EdgeInsets.zero,
+                tooltipBehavior: TooltipBehavior(enable: false),
+                borderColor: Colors.transparent,
+                plotAreaBorderWidth: 0,
+                primaryXAxis: NumericAxis(
+                  axisBorderType: AxisBorderType.withoutTopAndBottom,
+                  axisLine: const AxisLine(width: 0),
+                  isVisible: false,
+                  borderWidth: 0,
+                  majorGridLines: const MajorGridLines(
                 width: 0,
               ),
               minorGridLines: const MinorGridLines(
@@ -55,17 +55,17 @@ axisBorderType: AxisBorderType.withoutTopAndBottom,
                 minorTickLines: const MinorTickLines(
                   size: 0,
                   width: 0,
-                ),
-                isVisible: false),
-            borderWidth: 0,
-
-            series: <ChartSeries>[
-              // Renders line chart
-              LineSeries<List<num>, num>(
-                  dataSource: chartData,
-                  xValueMapper: (List<num> data, _) => data.first,
-                  yValueMapper: (List<num> data, _) => data.last)
-            ]));
+                    ),
+                    isVisible: false),
+                borderWidth: 0,
+                series: <ChartSeries>[
+                    // Renders line chart
+                    LineSeries<List<num>, num>(
+                        dataSource: chartData,
+                        xValueMapper: (List<num> data, _) => data.first,
+                        yValueMapper: (List<num> data, _) => data.last)
+                  ])
+            : SizedBox.shrink());
   }
 
   num countBorderPrice(bool isMax){
@@ -73,6 +73,7 @@ axisBorderType: AxisBorderType.withoutTopAndBottom,
     chartData.forEach((element) {
       numbers.add(element.last);
     });
+
     if(isMax){
       return numbers.reduce((curr, next) => curr > next? curr: next);
 
