@@ -14,6 +14,9 @@ class LightTheme implements AbstractTheme {
   Color get inactiveTextColor => const Color(0xFF6f6e75);
 
   @override
+  Color get accentColor => const Color(0xFF5530b3);
+
+  @override
   Color get cardColor => const Color(0xFFf9f8fd);
 
   @override
@@ -21,9 +24,11 @@ class LightTheme implements AbstractTheme {
 
   @override
   Color get rightColor => const Color(0xFF24ad65);
+
   @override
   AppShadows get appShadows => _LightAppShadows();
 }
+
 class _LightAppShadows implements AppShadows {
   @override
   BoxShadow xLargeShadow = BoxShadow(

@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:my_crypto/presentation/pages/home/home_page.dart';
+import 'package:my_crypto/presentation/pages/profile/profile_page.dart';
+import 'package:my_crypto/presentation/pages/settings/settings_page.dart';
+import 'package:my_crypto/presentation/pages/wallet/wallet_page.dart';
 import 'package:my_crypto/presentation/screens.dart';
 import 'package:my_crypto/presentation/screens/crypto_view/crypto_view.dart';
 import 'package:my_crypto/presentation/screens/main_screen.dart';
-import 'package:my_crypto/presentation/pages/home/home_page.dart';
-import 'package:my_crypto/presentation/pages/settings/settings_page.dart';
-import 'package:my_crypto/presentation/pages/wallet/wallet_page.dart';
 import 'package:my_crypto/presentation/screens/splash_screen.dart';
 import 'package:my_crypto/presentation/utils/scopeWidgets/home_scope.dart';
 import 'package:my_crypto/presentation/utils/scopeWidgets/main_scope.dart';
+import 'package:my_crypto/presentation/utils/scopeWidgets/profileWrapper.dart';
 
 @MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: [
   AutoRoute(name: 'selector', page: ScreenSelector, path: '/', initial: true, children: [
@@ -24,7 +26,10 @@ import 'package:my_crypto/presentation/utils/scopeWidgets/main_scope.dart';
               ),
             ]),
             AutoRoute(path: 'wallet', page: WalletPage),
-            AutoRoute(path: 'settings', page: SettingsPage),
+            AutoRoute(path: 'profileScope', page: ProfileWrapper, children: [
+              AutoRoute(path: 'settings', page: SettingsPage),
+              AutoRoute(path: 'profile', page: ProfilePage, initial: true),
+            ]),
           ],
           page: HomeScreen),
       AutoRoute(path: 'cryptoView', page: CryptoViewPage)

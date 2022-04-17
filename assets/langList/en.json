@@ -1,5 +1,6 @@
 {
   "home": "Home",
   "settings": "Settings",
-  "wallet": "Wallet"
+  "wallet": "Wallet",
+  "dataIsLoading": "Data is loading..."
 }

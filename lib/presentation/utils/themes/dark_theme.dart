@@ -14,6 +14,9 @@ class DarkTheme implements AbstractTheme {
   Color get inactiveTextColor => const Color(0xFF6f6e75);
 
   @override
+  Color get accentColor => const Color(0xFF5530b3);
+
+  @override
   Color get cardColor => const Color(0xFF211f27);
 
   @override

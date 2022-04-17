@@ -18,6 +18,8 @@ class CryptoBloc extends Bloc<CryptoEvent, CryptoState> {
     CryptoRemoteRepo repo = CryptoRemoteRepo(remoteDataSource: remoteCryptoDataSource);
     RemoteCryptoUseCase use = RemoteCryptoUseCase(repository: repo);
     List<CryptoEntity> list = [];
+    emit(const DataErrorState());
+
     final result = await use.call(NoParams());
     result.fold((l) {
       emit(const DataErrorState());
