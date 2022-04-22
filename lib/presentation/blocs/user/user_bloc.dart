@@ -26,17 +26,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   void _onAppStarted(InitUserEvent event, Emitter<UserState> emit) async {
-    try {
-      final currentUser = await _getCurrentUserUseCase.call(NoParams());
-      currentUser.fold(
-          (l) => emit(state.authorizationErrorState('')),
-          (r) => {
-                if (r != null) {emit(state.authorized(userEntity: r))} else {emit(state.unauthorizedState())}
-              });
-    } catch (e) {
-      emit(state.authorizationErrorState(''));
-      logger.e(e);
-    }
+    emit(state.unauthorizedState());
+    // try {
+    //   final currentUser = await _getCurrentUserUseCase.call(NoParams());
+    //   currentUser.fold(
+    //       (l) => emit(state.authorizationErrorState('')),
+    //       (r) => {
+    //             if (r != null) {emit(state.authorized(userEntity: r))} else {emit(state.unauthorizedState())}
+    //           });
+    // } catch (e) {
+    //   emit(state.authorizationErrorState(''));
+    //   logger.e(e);
+    // }
   }
 
   Future<void> _loginWithEmailAndPassword(LoginWithEmailAndPasswordEvent event, Emitter<UserState> emit) async {
