@@ -4,16 +4,11 @@ import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/utils/languages/languages_info.dart';
 
-final appRouter = getIt<AppRouter>();
+class Application extends StatelessWidget {
+  static final appRouter = getIt<AppRouter>();
 
-class Application extends StatefulWidget {
   const Application({Key? key}) : super(key: key);
 
-  @override
-  State<Application> createState() => _ApplicationState();
-}
-
-class _ApplicationState extends State<Application> {
   @override
   Widget build(BuildContext context) {
     return easy_local.EasyLocalization(
@@ -27,6 +22,7 @@ class _ApplicationState extends State<Application> {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
+            color: Colors.green,
             builder: (context, router) => router!,
           );
         }));

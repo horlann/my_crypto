@@ -2,6 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
+import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
@@ -66,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
-                          appRouter.push(const SettingsRoute());
+                          getIt<AppRouter>().push(const SettingsRoute());
                         },
                         child: Container(
                           width: 50,
@@ -103,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 } else {
                   return GestureDetector(
                     onTap: () {
-                      appRouter.push(const SettingsRoute());
+                      getIt<AppRouter>().push(const SettingsRoute());
                     },
                     child: Container(
                       width: 50,

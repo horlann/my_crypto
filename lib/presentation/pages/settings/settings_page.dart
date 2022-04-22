@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/settings/settings_bloc.dart';
@@ -47,7 +48,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  appRouter.push(const ProfileRoute());
+                  // getIt<AppRouter>().replace(const PagePage());
                 },
                 child: Container(
                   width: 50,

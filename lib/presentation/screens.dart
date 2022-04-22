@@ -7,15 +7,9 @@ import 'package:my_crypto/presentation/blocs/user/user_event.dart';
 import 'package:my_crypto/presentation/screens/splash_screen.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_event.dart';
-
-class ScreenSelector extends StatefulWidget {
+class ScreenSelector extends StatelessWidget {
   const ScreenSelector({Key? key}) : super(key: key);
 
-  @override
-  State<ScreenSelector> createState() => _ScreenSelectorState();
-}
-
-class _ScreenSelectorState extends State<ScreenSelector> {
   @override
   Widget build(BuildContext context) {
     precacheImage(Image.asset('assets/logo.png').image, context);
@@ -25,12 +19,9 @@ class _ScreenSelectorState extends State<ScreenSelector> {
           lazy: false,
           create: (BuildContext context) => getIt<UserBloc>()..add(InitUserEvent()),
           child: Builder(builder: (context) {
-            return AutoRouter(
-              placeholder: (BuildContext context) {
-                return const SplashScreen();
-              },
-            );
+            return SplashScreen();
           }),
         ));
   }
 }
+

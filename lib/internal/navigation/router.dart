@@ -6,6 +6,8 @@ import 'package:my_crypto/presentation/pages/wallet/wallet_page.dart';
 import 'package:my_crypto/presentation/screens.dart';
 import 'package:my_crypto/presentation/screens/crypto_view/crypto_view.dart';
 import 'package:my_crypto/presentation/screens/main_screen.dart';
+import 'package:my_crypto/presentation/screens/onboarding/onboarding_screen.dart';
+import 'package:my_crypto/presentation/screens/register/registration_screen.dart';
 import 'package:my_crypto/presentation/screens/splash_screen.dart';
 import 'package:my_crypto/presentation/utils/scopeWidgets/home_scope.dart';
 import 'package:my_crypto/presentation/utils/scopeWidgets/main_scope.dart';
@@ -33,9 +35,10 @@ import 'package:my_crypto/presentation/utils/scopeWidgets/profileWrapper.dart';
           ],
           page: HomeScreen),
       AutoRoute(path: 'cryptoView', page: CryptoViewPage)
-
     ]),
-    AutoRoute(initial: true, path: 'splash', page: SplashScreen, name: 'splash')
+    AutoRoute(initial: true, path: 'splash', page: SplashScreen, name: 'splash'),
+    AutoRoute(path: 'boarding', page: OnBoarding, name: 'boarding'),
+    AutoRoute(path: 'registration', page: RegistrationScreen, name: 'registration'),
   ])
 ])
 class $AppRouter {}

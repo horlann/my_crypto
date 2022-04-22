@@ -15,7 +15,7 @@ Future<void> main() async {
   await easy_local.EasyLocalization.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const Application());
+  runApp(Application());
 }
 
 void _initLogger() {

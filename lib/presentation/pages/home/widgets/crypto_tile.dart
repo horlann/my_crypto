@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:my_crypto/domain/entities/crypto/crypto.dart';
+import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
@@ -19,7 +20,7 @@ class CryptoTile extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        appRouter.push(CryptoViewRoute(cryptoEntity: _cryptoEntity));
+        getIt<AppRouter>().push(CryptoViewRoute(cryptoEntity: _cryptoEntity));
       },
       child: Container(
           height: 75,

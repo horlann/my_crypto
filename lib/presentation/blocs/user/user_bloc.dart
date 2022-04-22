@@ -28,7 +28,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   void _onAppStarted(InitUserEvent event, Emitter<UserState> emit) async {
     try {
       final currentUser = await _getCurrentUserUseCase.call(NoParams());
-      currentUser.fold((l) => emit(state.authorizationErrorState('')), (r) => emit(state.authorized(userEntity: r!)));
+      currentUser.fold(
+          (l) => emit(state.authorizationErrorState('')),
+          (r) => {
+                if (r != null) {emit(state.authorized(userEntity: r))} else {emit(state.unauthorizedState())}
+              });
     } catch (e) {
       emit(state.authorizationErrorState(''));
       logger.e(e);

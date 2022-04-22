@@ -7,15 +7,20 @@ import 'package:my_crypto/internal/core/exceptions.dart';
 
 abstract class IRemoteCryptoDataSource {
   Future<List<CryptoEntity>> getAllCryptos();
+
+  Future<List<CryptoEntity>> getCryptosFromCoinMarketCap();
+
+  Future<List<CryptoEntity>> getMetadata({required List<CryptoEntity> listWithCrypto});
 }
 
 class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
   @override
   Future<List<CryptoEntity>> getAllCryptos() async {
-    return getLatestTrending();
+    return getCryptosFromCoinMarketCap();
   }
 
-  Future<List<CryptoEntity>> getLatestTrending() async {
+  @override
+  Future<List<CryptoEntity>> getCryptosFromCoinMarketCap() async {
     var dio = Dio();
     final response = await dio.get(
       '${restApiCoinMarketCap}v1/cryptocurrency/listings/latest',
@@ -35,9 +40,9 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
       return CryptoEntity.fromRemoteModel(remoteModel: e);
     }).toList();
     List<String> ids = [];
-    listWithCrypto.forEach((element) {
+    for (var element in listWithCrypto) {
       ids.add(element.id);
-    });
+    }
 
     listWithCrypto = await getMetadata(listWithCrypto: listWithCrypto);
     if (response.statusCode == 200) {
@@ -50,9 +55,9 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
   Future<List<CryptoEntity>> getMetadata({required List<CryptoEntity> listWithCrypto}) async {
     List<CryptoEntity> updatedList = [];
     List<String> ids = [];
-    listWithCrypto.forEach((element) {
+    for (var element in listWithCrypto) {
       ids.add(element.id);
-    });
+    }
     var dio = Dio();
     final response = await dio.get(
       '${restApiCoinMarketCap}v2/cryptocurrency/info',

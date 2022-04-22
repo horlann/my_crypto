@@ -77,7 +77,7 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
           return Left(ServerFailure());
         }
       } else {
-        return Left(ServerFailure());
+        return const Right(null);
       }
     } on Exception catch (e) {
       logger.e(e);

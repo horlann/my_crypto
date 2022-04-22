@@ -1,7 +1,10 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:my_crypto/internal/locator/locator.dart';
+import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_state.dart';
@@ -20,14 +23,19 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        if (state is AuthorizedState && state is UnauthorizedState) {
-          appRouter.replaceNamed('mainRoute');
+        if (state is AuthorizedState || state is UnauthorizedState) {
+          getIt<AppRouter>().replaceNamed('mainRoute');
+        } else if (state is AuthorizationErrorState) {
+          Flushbar(
+            title: "Error",
+            message: "Something went wrong...",
+            duration: const Duration(seconds: 3),
+          ).show(context);
         }
       },
       child: Builder(
         builder: (context) {
           final AbstractTheme theme = BlocProvider.of<ThemesBloc>(context).theme;
-
           return Scaffold(
             body: Container(
               color: theme.backgroundColor,

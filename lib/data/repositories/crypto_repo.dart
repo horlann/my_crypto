@@ -16,7 +16,9 @@ class CryptoRemoteRepo extends ICryptoRepo {
   Future<Either<Failure, List<CryptoEntity>>> getAllCryptos() async {
     if (getIt.get<ConnectionChecker>().isConnected) {
       try {
-        List<CryptoEntity> cryptoList = await remoteDataSource.getAllCryptos();
+        List<CryptoEntity> cryptoList = [];
+        cryptoList = await _getCryptosFromConMarketCap();
+
         return Right(cryptoList);
       } on ServerFailure {
         return Left(ServerFailure());
@@ -24,5 +26,10 @@ class CryptoRemoteRepo extends ICryptoRepo {
     } else {
       return Left(ServerFailure());
     }
+  }
+
+  Future<List<CryptoEntity>> _getCryptosFromConMarketCap() async {
+    List<CryptoEntity> cryptoList = await remoteDataSource.getCryptosFromCoinMarketCap();
+    return cryptoList;
   }
 }

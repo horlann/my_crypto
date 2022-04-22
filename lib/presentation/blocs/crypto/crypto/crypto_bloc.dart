@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:my_crypto/data/data_sources/crypto/remote/remote_crypto_data_source.dart';
-import 'package:my_crypto/data/repositories/crypto/crypto_repo.dart';
+import 'package:my_crypto/data/repositories/crypto_repo.dart';
 import 'package:my_crypto/domain/entities/crypto/crypto.dart';
 import 'package:my_crypto/domain/use_cases/crypto/remote/remote_crypto_use_case.dart';
 import 'package:my_crypto/internal/core/usecases.dart';
@@ -18,8 +18,6 @@ class CryptoBloc extends Bloc<CryptoEvent, CryptoState> {
     CryptoRemoteRepo repo = CryptoRemoteRepo(remoteDataSource: remoteCryptoDataSource);
     RemoteCryptoUseCase use = RemoteCryptoUseCase(repository: repo);
     List<CryptoEntity> list = [];
-    emit(const DataErrorState());
-
     final result = await use.call(NoParams());
     result.fold((l) {
       emit(const DataErrorState());
