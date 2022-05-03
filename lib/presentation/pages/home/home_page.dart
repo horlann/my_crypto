@@ -35,16 +35,12 @@ class HomePage extends StatelessWidget {
                   ),
                 );
               } else if (state is DataErrorState) {
-                return Container(
-                  child: Center(child: Text(easy_local.tr('Error'))),
-                );
+                return Center(child: Text(easy_local.tr('Error')));
               } else {
-                return Container(
-                  child: Center(
-                      child: SpinKitWanderingCubes(
-                    color: theme.accentColor,
-                  )),
-                );
+                return Center(
+                    child: SpinKitWanderingCubes(
+                  color: theme.accentColor,
+                ));
               }
             },
           );

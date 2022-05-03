@@ -2,5 +2,10 @@
   "home": "Home",
   "settings": "Settings",
   "wallet": "Wallet",
-  "dataIsLoading": "Data is loading..."
+  "dataIsLoading": "Data is loading...",
+  "login": "Login",
+  "password": "Password",
+  "dont_have_account": "Don’t have an Account",
+  "sign_up": "Sign Up",
+  "create_new_account": "Create New Account"
 }

@@ -1,4 +1,5 @@
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
+import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 
 class UserState {
   const UserState();
@@ -15,7 +16,7 @@ class UserState {
     return const UnauthorizedState();
   }
 
-  UserState authorizationErrorState(String error) {
+  UserState authorizationErrorState(LoginErrors error) {
     return AuthorizationErrorState(error);
   }
 
@@ -23,7 +24,6 @@ class UserState {
     return const InProgressAuthState();
   }
 
-  @override
   List<Object?> get props => [];
 }
 
@@ -42,7 +42,7 @@ class UnauthorizedState extends UserState {
 class AuthorizationErrorState extends UserState {
   const AuthorizationErrorState(this.error);
 
-  final String error;
+  final LoginErrors error;
 
   @override
   List<Object?> get props => [error];

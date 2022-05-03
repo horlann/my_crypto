@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'crypto_remote_model_from_coinGecko.g.dart';
+part 'crypto_remote_model_from_coingecko.g.dart';
 
 @JsonSerializable()
 class CryptoRemoteModelFromCoinGecko {

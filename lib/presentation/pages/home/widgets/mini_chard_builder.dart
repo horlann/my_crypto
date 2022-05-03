@@ -9,7 +9,7 @@ class MiniChartBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: double.infinity,
-        child: chartData.length != 0
+        child: chartData.isNotEmpty
             ? SfCartesianChart(
                 margin: EdgeInsets.zero,
                 tooltipBehavior: TooltipBehavior(enable: false),
@@ -65,14 +65,14 @@ axisBorderType: AxisBorderType.withoutTopAndBottom,
                         xValueMapper: (List<num> data, _) => data.first,
                         yValueMapper: (List<num> data, _) => data.last)
                   ])
-            : SizedBox.shrink());
+            : const SizedBox.shrink());
   }
 
   num countBorderPrice(bool isMax){
     List<num> numbers=[];
-    chartData.forEach((element) {
+    for (var element in chartData) {
       numbers.add(element.last);
-    });
+    }
 
     if(isMax){
       return numbers.reduce((curr, next) => curr > next? curr: next);

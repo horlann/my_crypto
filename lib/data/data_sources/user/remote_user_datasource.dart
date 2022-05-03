@@ -28,8 +28,7 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
   Future<Either<Failure, UserEntity>> signIn(String email, String password) async {
     UserEntity? userEntity;
     try {
-      UserCredential userCredential =
-          await auth.signInWithEmailAndPassword(email: 'tortos121@gmail.com', password: '123456');
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
       try {
         final userCollectionRef = firestore.collection("users");
         final uuid = auth.currentUser!.uid;
@@ -54,8 +53,10 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
         logger.e('The email address is badly formatted.');
       } else if (e.code == 'wrong-password') {
         logger.e('The password is invalid or the user does not have a password.');
+        return Left(IncorrectPasswordOrEmailFailure());
       } else if (e.code == 'too-many-requests') {
         logger.e('We have blocked all requests from this device due to unusual activity. Try again later.');
+        return Left(TooMuchRequestsFailure());
       }
       return Left(ServerFailure());
     }

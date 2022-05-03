@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_event.dart';
 import 'package:my_crypto/presentation/blocs/user/user_state.dart';
@@ -60,9 +59,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         height: 80,
                         clipBehavior: Clip.hardEdge,
                         child: Image.network(
-                          user.imageLink,
-                          fit: BoxFit.cover,
-                        ),
+                          user.imageLink, fit: BoxFit.cover, errorBuilder: (context, object, error) {
+                          return const Icon(Icons.hail);
+                        }),
                       ),
                       const Spacer(),
                       GestureDetector(
@@ -104,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 } else {
                   return GestureDetector(
                     onTap: () {
-                      getIt<AppRouter>().push(const SettingsRoute());
+                      getIt<AppRouter>().pushNamed('settings');
                     },
                     child: Container(
                       width: 50,

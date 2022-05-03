@@ -1,21 +1,27 @@
 import 'package:easy_localization/easy_localization.dart' as easy_local;
-import 'package:firebase_core/firebase_core.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/presentation/application.dart';
+import 'package:my_crypto/presentation/utils/languages/languages_info.dart';
 
 late Logger logger;
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  _initLogger();
-  setupLocators(Environment.dev);
-  await easy_local.EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(Application());
+  await easy_local.EasyLocalization.ensureInitialized();
+  _initLogger();
+  await setupLocators(Environment.dev);
+
+  runApp(
+    EasyLocalization(
+        supportedLocales: LangArraysInfo.getTranslateList(), path: 'assets/langList', child: const Application()),
+  );
 }
 
 void _initLogger() {

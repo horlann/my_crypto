@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/blocs/settings/settings_bloc.dart';
 import 'package:my_crypto/presentation/blocs/settings/settings_event.dart';
 import 'package:my_crypto/presentation/blocs/settings/settings_state.dart';
@@ -48,7 +47,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               GestureDetector(
                 onTap: () {
-                  // getIt<AppRouter>().replace(const PagePage());
+                   getIt<AppRouter>().replace(const ProfileRoute());
                 },
                 child: Container(
                   width: 50,

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart' as easy_local;
+import 'package:flutter/material.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +12,11 @@ class WalletPage extends StatelessWidget {
 
     return Container(
       color: themes.backgroundColor,
-      child: Center(child: Text(easy_local.tr('wallet'),style: TextStyle(color: Colors.amber),)),
+      child: Center(
+          child: Text(
+        easy_local.tr('wallet'),
+        style: const TextStyle(color: Colors.amber),
+      )),
     );
   }
 }

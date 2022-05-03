@@ -122,7 +122,7 @@ class CryptoRemoteModel {
 
   @JsonKey(name: 'last_updated', defaultValue: '')
   final String lastUpdated;
-  @JsonKey(name: 'quote', nullable: true)
+  @JsonKey(name: 'quote')
   final Quote quote;
   @JsonKey(name: 'prices', defaultValue: [])
   final List<List<num>> historicalPrices;

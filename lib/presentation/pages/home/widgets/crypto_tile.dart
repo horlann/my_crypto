@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:my_crypto/domain/entities/crypto/crypto.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/application.dart';
 import 'package:my_crypto/presentation/pages/home/widgets/mini_chard_builder.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:provider/provider.dart';

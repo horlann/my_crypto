@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:my_crypto/data/api/models/remote_models/coin_gecko/crypto_remote_model_from_coinGecko.dart';
+import 'package:my_crypto/data/api/models/remote_models/coin_gecko/crypto_remote_model_from_coingecko.dart';
 import 'package:my_crypto/data/api/models/remote_models/coin_market_cap/crypto_remote_model.dart';
 import 'package:my_crypto/data/api/utils/api_config.dart';
 import 'package:my_crypto/domain/entities/crypto/crypto.dart';
@@ -70,11 +70,11 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
     );
 
     (response.data['data'] as Map<String, dynamic>).forEach((key, value) {
-      listWithCrypto.forEach((element) {
+      for (var element in listWithCrypto) {
         if (element.id == key) {
           updatedList.add(element.copyWith(imageLink: value['logo']));
         }
-      });
+      }
     });
     updatedList.sort((a, b) => b.marketCap.compareTo(a.marketCap));
     return updatedList;
@@ -89,11 +89,11 @@ class RemoteCryptoDataSource extends IRemoteCryptoDataSource {
     }).toList();
 
     list.forEach((coingecko) async {
-      listWithCrypto.forEach((element) {
+      for (var element in listWithCrypto) {
         if (element.name == coingecko.name) {
           updatedList.add(element.copyWith(id: coingecko.id));
         }
-      });
+      }
     });
 
     updatedList.sort((a, b) => b.marketCap.compareTo(a.marketCap));

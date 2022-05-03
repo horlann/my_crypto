@@ -2,5 +2,10 @@
   "home": "Домашня",
   "settings": "Налаштування",
   "wallet": "Гаманець",
-  "dataIsLoading": "Триває завантаження даних..."
+  "dataIsLoading": "Триває завантаження даних...",
+  "login": "Увійти",
+  "password": "Пароль",
+  "dont_have_account": "Немає акаунта?",
+  "sign_up": "Зареєструватися",
+  "create_new_account": "Створити акаунт"
 }

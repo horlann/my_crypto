@@ -4,6 +4,7 @@ import 'package:my_crypto/domain/use_cases/user/get_current_user_usecase.dart';
 import 'package:my_crypto/domain/use_cases/user/user_sign_in_usecase.dart';
 import 'package:my_crypto/domain/use_cases/user/user_sign_out_usecase.dart';
 import 'package:my_crypto/domain/use_cases/user/user_sign_up_usecase.dart';
+import 'package:my_crypto/internal/core/failures.dart';
 import 'package:my_crypto/internal/core/usecases.dart';
 import 'package:my_crypto/main.dart';
 import 'package:uuid/uuid.dart';
@@ -26,27 +27,32 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final GetCurrentUserUseCase _getCurrentUserUseCase;
 
   void _onAppStarted(InitUserEvent event, Emitter<UserState> emit) async {
-    emit(state.unauthorizedState());
-    // try {
-    //   final currentUser = await _getCurrentUserUseCase.call(NoParams());
-    //   currentUser.fold(
-    //       (l) => emit(state.authorizationErrorState('')),
-    //       (r) => {
-    //             if (r != null) {emit(state.authorized(userEntity: r))} else {emit(state.unauthorizedState())}
-    //           });
-    // } catch (e) {
-    //   emit(state.authorizationErrorState(''));
-    //   logger.e(e);
-    // }
+    await Future.delayed(const Duration(milliseconds: 500));
+    try {
+      final currentUser = await _getCurrentUserUseCase.call(NoParams());
+      currentUser.fold(
+          (l) => emit(state.authorizationErrorState(LoginErrors.unhandledError)),
+          (r) => {
+                if (r != null) {emit(state.authorized(userEntity: r))} else {emit(state.unauthorizedState())}
+              });
+    } catch (e) {
+      emit(state.authorizationErrorState(LoginErrors.unhandledError));
+      logger.e(e);
+    }
   }
 
   Future<void> _loginWithEmailAndPassword(LoginWithEmailAndPasswordEvent event, Emitter<UserState> emit) async {
     emit(state.inProgress());
     try {
       final registerResult = await _userSignInUseCase.call(SignInParams(event.email, event.password));
-      registerResult.fold((l) => emit(state.authorizationErrorState('')), (r) => emit(state.authorized(userEntity: r)));
+      registerResult.fold((l) {
+        LoginErrors error = LoginErrors.unhandledError;
+        if (l is IncorrectPasswordOrEmailFailure) error = LoginErrors.incorrectLoginOrPassword;
+        if (l is TooMuchRequestsFailure) error = LoginErrors.tooMuchRequests;
+        emit(state.authorizationErrorState(error));
+      }, (r) => emit(state.authorized(userEntity: r)));
     } catch (e) {
-      emit(state.authorizationErrorState(''));
+      emit(state.authorizationErrorState(LoginErrors.unhandledError));
       logger.e(e);
     }
   }
@@ -56,9 +62,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     try {
       final registerResult = await _userSignUpUseCase.call(SignUpParams(UserEntity(
           email: 'tortos124@gmail.com', imageLink: '', name: 'Danil', password: '123456', uuid: const Uuid().v4())));
-      registerResult.fold((l) => emit(state.authorizationErrorState('')), (r) => emit(state.authorized(userEntity: r)));
+      registerResult.fold((l) => emit(state.authorizationErrorState(LoginErrors.unhandledError)),
+          (r) => emit(state.authorized(userEntity: r)));
     } catch (e) {
-      emit(state.authorizationErrorState(''));
+      emit(state.authorizationErrorState(LoginErrors.unhandledError));
       logger.e(e);
     }
   }
@@ -67,10 +74,13 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.inProgress());
     try {
       final registerResult = await _userSignOutUseCase.call(NoParams());
-      registerResult.fold((l) => emit(state.authorizationErrorState('')), (r) => emit(state.unauthorizedState()));
+      registerResult.fold((l) => emit(state.authorizationErrorState(LoginErrors.unhandledError)),
+          (r) => emit(state.unauthorizedState()));
     } catch (e) {
-      emit(state.authorizationErrorState(''));
+      emit(state.authorizationErrorState(LoginErrors.unhandledError));
       logger.e(e);
     }
   }
 }
+
+enum LoginErrors { incorrectLoginOrPassword, tooMuchRequests, unhandledError }

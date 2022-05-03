@@ -31,8 +31,8 @@ class UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity{' +
-        ' uuid: $uuid,' +
+    return 'UserEntity{'
+            ' uuid: $uuid,' +
         ' name: $name,' +
         ' imageLink: $imageLink,' +
         ' email: $email,' +
@@ -58,11 +58,11 @@ class UserEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      'uuid': this.uuid,
-      'name': this.name,
-      'imageLink': this.imageLink,
-      'email': this.email,
-      'password': this.password,
+      'uuid': uuid,
+      'name': name,
+      'imageLink': imageLink,
+      'email': email,
+      'password': password,
     };
   }
 

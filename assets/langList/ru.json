@@ -2,5 +2,10 @@
   "home": "Домашняя",
   "settings": "Настройки",
   "wallet": "Кошелек",
-  "dataIsLoading": "Идет загрузка данных..."
+  "dataIsLoading": "Идет загрузка данных...",
+  "login": "Войти",
+  "password": "Пароль",
+  "dont_have_account": "Нет аккаунта?",
+  "sign_up": "Зарегестрироваться",
+  "create_new_account": "Создать аккаунт"
 }

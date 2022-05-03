@@ -1,3 +1,5 @@
 abstract class AppStarterEvent {}
 
-class InitEvent extends AppStarterEvent {}
+class InitAppEvent extends AppStarterEvent {}
+
+class CallbackAfterSplashEvent extends AppStarterEvent {}

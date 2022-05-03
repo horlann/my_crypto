@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'crypto_remote_model_from_coinGecko.dart';
+part of 'crypto_remote_model_from_coingecko.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
