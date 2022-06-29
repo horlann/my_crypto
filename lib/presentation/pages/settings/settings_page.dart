@@ -9,6 +9,7 @@ import 'package:my_crypto/presentation/blocs/settings/settings_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_event.dart';
+import 'package:my_crypto/presentation/widgets/background.dart';
 import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -45,17 +46,11 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                   getIt<AppRouter>().replace(const ProfileRoute());
-                },
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  color: _theme.cardColor,
-                  child: const Icon(Icons.arrow_back_ios),
-                ),
-              )
+              CustomBackButton(
+                  callback: () {
+                    getIt<AppRouter>().navigate(const ProfileRoute());
+                  },
+                  theme: _theme),
             ],
           ),
           Expanded(

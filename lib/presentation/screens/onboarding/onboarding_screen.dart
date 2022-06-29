@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/screens/onboarding/onboarding_content_tile.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
+import 'package:my_crypto/presentation/utils/themes/dark_theme.dart';
 import 'package:my_crypto/presentation/widgets/main_rounded_button.dart';
 import 'package:provider/provider.dart';
 
@@ -18,20 +20,34 @@ class _OnBoardingState extends State<OnBoarding> {
   int currentPage = 0;
   final PageController _pageController = PageController(initialPage: 0);
   List<Map<String, String>> data = <Map<String, String>>[];
+  late AbstractTheme theme;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    theme = Provider.of<ThemesBloc>(context).theme;
     data = [
-      {"title": "Lets try", "text": "Small introduce to the app", 'imagePath': 'assets/logo.png'},
-      {"title": "Lets try", "text": "Small introduce to the app", 'imagePath': 'assets/logo.png'},
-      {"title": "Register", "text": "Create an account and try all features", 'imagePath': 'assets/logo.png'},
+      {
+        "title": "Lets try",
+        "text": "Small introduce to the app",
+        'imagePath':
+            theme is DarkTheme ? 'assets/lottie/bitcoin_in_cup_dark.json' : 'assets/lottie/bitcoin_in_cup_light.json'
+      },
+      {
+        "title": "Crypto Wallet",
+        "text": "You can safely store your coins here and increase them by stacking",
+        'imagePath': 'assets/lottie/bitcoin_wallet.json'
+      },
+      {
+        "title": "Crypto Exchange",
+        "text": "You can instantly trade between different coins without any commissions",
+        'imagePath': 'assets/lottie/exchange_cryptocurrency.json'
+      },
     ];
   }
 
   @override
   Widget build(BuildContext context) {
-    AbstractTheme theme = Provider.of<ThemesBloc>(context).theme;
     return Scaffold(
       backgroundColor: theme.backgroundColor,
       body: SafeArea(
@@ -53,7 +69,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   itemBuilder: (context, index) => OnBoardingContent(
                     title: data[index]['title'] ?? 'error',
                     text: data[index]['text'] ?? 'error',
-                    imagePath: data[index]['imagePath'] ?? 'error',
+                    lottieAsset: data[index]['imagePath'] ?? 'error',
                     theme: theme,
                   ),
                 ),
@@ -71,7 +87,7 @@ class _OnBoardingState extends State<OnBoarding> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
                           data.length,
-                          (index) => buildDot(index: index),
+                              (index) => buildDot(index: index),
                         ),
                       ),
                       const Spacer(flex: 2),
@@ -79,7 +95,7 @@ class _OnBoardingState extends State<OnBoarding> {
                         children: [
                           Expanded(
                             child: MainRoundedButton(
-                              text: "Skip",
+                              text: easy_local.tr('skip'),
                               paddingVert: 16,
                               callback: () {
                                 if (currentPage != data.length - 1) {
@@ -101,11 +117,11 @@ class _OnBoardingState extends State<OnBoarding> {
                           Expanded(
                             flex: 2,
                             child: MainRoundedButton(
-                              text: "Continue",
+                              text: easy_local.tr(currentPage == data.length - 1 ? 'sign_in' : 'continue'),
                               paddingVert: 16,
                               callback: () {
                                 if (currentPage == data.length - 1) {
-                                  getIt<AppRouter>().replaceNamed('login');
+                                  getIt<AppRouter>().pushNamed('login');
                                 } else {
                                   _pageController.animateToPage(++currentPage,
                                       duration: const Duration(milliseconds: 500), curve: Curves.linear);

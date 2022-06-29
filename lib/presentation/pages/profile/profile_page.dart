@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
@@ -7,9 +8,12 @@ import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_event.dart';
 import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/pages/profile/widgets/unauthorized_profile_body.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:provider/provider.dart';
+
+import 'widgets/authorized_profile_body.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -50,21 +54,25 @@ class _ProfilePageState extends State<ProfilePage> {
               Builder(builder: (context) {
                 if (state is AuthorizedState) {
                   final UserEntity user = state.user;
-
                   return Row(
                     children: [
                       Container(
                         decoration: const BoxDecoration(shape: BoxShape.circle),
-                        width: 80,
-                        height: 80,
+                        width: 60,
+                        height: 60,
                         clipBehavior: Clip.hardEdge,
-                        child: Image.network(
-                          user.imageLink, fit: BoxFit.cover, errorBuilder: (context, object, error) {
-                          return const Icon(Icons.hail);
-                        }),
+                        child: CachedNetworkImage(
+                          imageUrl: user.imageLink,
+                          fit: BoxFit.cover,
+                          errorWidget: (context, error, variable) {
+                            return Container(
+                              color: Colors.red,
+                            );
+                          },
+                        ),
                       ),
                       const Spacer(),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           getIt<AppRouter>().push(const SettingsRoute());
                         },
@@ -81,8 +89,15 @@ class _ProfilePageState extends State<ProfilePage> {
                       const SizedBox(
                         width: 15,
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
+                          Flushbar(
+                            title: "Not so quickly",
+                            message: "If you want to log out please hold down",
+                            duration: const Duration(seconds: 3),
+                          ).show(context);
+                        },
+                        onLongPress: () {
                           _userBloc.add(const LogoutEvent());
                         },
                         child: Container(
@@ -101,49 +116,38 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   );
                 } else {
-                  return GestureDetector(
-                    onTap: () {
-                      getIt<AppRouter>().pushNamed('settings');
-                    },
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      color: _theme.cardColor,
-                      child: const Icon(Icons.settings),
-                    ),
+                  return Row(
+                    children: [
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          getIt<AppRouter>().pushNamed('settings');
+                        },
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(color: _theme.cardColor, shape: BoxShape.circle),
+                          child: const Icon(Icons.settings),
+                        ),
+                      ),
+                    ],
                   );
                 }
               }),
-              const Spacer(),
               Center(child: Builder(builder: (context) {
                 if (state is AuthorizedState) {
-                  final UserEntity user = state.user;
-                  return Text(
-                    '${user.name} Done!',
-                    style: TextStyle(fontSize: 20, color: _theme.infoTextColor),
+                  return AuthorizedProfileBody(
+                    userEntity: state.user,
+                    theme: _theme,
                   );
                 } else if (state is InProgressAuthState) {
                   return const CircularProgressIndicator();
                 } else {
-                  return Column(
-                    children: [
-                      TextFormField(),
-                      TextFormField(),
-                      ElevatedButton(
-                          onPressed: () {
-                            _userBloc.add(const LoginWithEmailAndPasswordEvent('tortos122@gmail.com', '123456'));
-                          },
-                          child: const Text('login')),
-                      ElevatedButton(
-                          onPressed: () {
-                            _userBloc.add(const RegisterWithEmailAndPassword('tortos', 'qwert'));
-                          },
-                          child: const Text('register'))
-                    ],
+                  return UnauthorizedProfile(
+                    theme: _theme,
                   );
                 }
               })),
-              const Spacer(),
             ],
           ),
         );

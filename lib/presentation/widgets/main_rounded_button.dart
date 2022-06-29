@@ -21,11 +21,11 @@ class MainRoundedButton extends StatelessWidget {
       required this.color,
       required this.callback,
       required this.theme,
-      this.round = 16,
+      this.round = 24,
       this.isActive = true,
       this.textSize = 15,
       this.padding = 5,
-      this.paddingVert = 8,
+      this.paddingVert = 10,
       this.border,
       this.isLoading = false,
       this.textStyle = const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18)})
@@ -39,9 +39,9 @@ class MainRoundedButton extends StatelessWidget {
         color: color,
         child: InkWell(
           onTap: callback,
-          hoverColor: color,
-          focusColor: color,
-          highlightColor: color,
+          hoverColor: color.withOpacity(0.7),
+          focusColor: color.withOpacity(0.7),
+          highlightColor: color.withOpacity(0.7),
           child: Container(
             decoration: BoxDecoration(
               border: border,

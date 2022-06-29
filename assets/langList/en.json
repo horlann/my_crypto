@@ -7,5 +7,9 @@
   "password": "Password",
   "dont_have_account": "Don’t have an Account",
   "sign_up": "Sign Up",
-  "create_new_account": "Create New Account"
+  "sign_in": "Sign in",
+  "sign_in_to_try": "Sign in to try all functionality",
+  "create_new_account": "Create New Account",
+  "continue": "Continue",
+  "skip": "Skip"
 }

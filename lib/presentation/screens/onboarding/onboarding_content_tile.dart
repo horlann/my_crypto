@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 
 class OnBoardingContent extends StatelessWidget {
@@ -6,12 +7,12 @@ class OnBoardingContent extends StatelessWidget {
     Key? key,
     required this.title,
     required this.text,
-    required this.imagePath,
+    required this.lottieAsset,
     required this.theme,
   }) : super(key: key);
   final String title;
   final String text;
-  final String imagePath;
+  final String lottieAsset;
   final AbstractTheme theme;
 
   @override
@@ -19,7 +20,7 @@ class OnBoardingContent extends StatelessWidget {
     return Column(
       children: <Widget>[
         const SizedBox(
-          height: 80,
+          height: 60,
         ),
         Text(
           "MyCrypto",
@@ -30,9 +31,12 @@ class OnBoardingContent extends StatelessWidget {
           ),
         ),
         const SizedBox(
-          height: 80,
+          height: 30,
         ),
-        Image.asset(imagePath),
+        Expanded(
+          child: Lottie.asset(lottieAsset),
+          flex: 3,
+        ),
         const SizedBox(
           height: 40,
         ),
@@ -49,7 +53,7 @@ class OnBoardingContent extends StatelessWidget {
           style: TextStyle(color: theme.infoTextColor, fontSize: 16, fontWeight: FontWeight.w600),
           textAlign: TextAlign.center,
         ),
-        const Spacer(flex: 2),
+        const Spacer(flex: 1),
       ],
     );
   }

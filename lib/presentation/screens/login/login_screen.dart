@@ -34,11 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
     UserBloc userBloc = Provider.of<UserBloc>(context);
 
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: theme.backgroundColor,
-      body: Background(
-        bottomRightDecoration: true,
-        child: SingleChildScrollView(
+    return Background(
+      bottomRightDecoration: true,
+      callbackForBackButton: () {
+        getIt<AppRouter>().navigateBack();
+      },
+      child: Scaffold(
+        backgroundColor: theme.backgroundColor,
+        body: SingleChildScrollView(
           padding: EdgeInsets.zero,
           child: Container(
             height: size.height,
@@ -73,26 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            getIt<AppRouter>().replaceNamed('login');
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 50,
-                            color: Colors.transparent,
-                            alignment: Alignment.center,
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              // color: _theme.infoTextColor,
-                            ),
-                          ),
-                        ),
-                        const Spacer()
-                      ],
-                    ),
+                    const SizedBox(height: 60),
                     SvgPicture.asset(
                       "assets/svgIcons/sign_up.svg",
                       height: size.height * 0.3,

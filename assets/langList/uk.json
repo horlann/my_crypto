@@ -7,5 +7,9 @@
   "password": "Пароль",
   "dont_have_account": "Немає акаунта?",
   "sign_up": "Зареєструватися",
-  "create_new_account": "Створити акаунт"
+  "sign_in": "Увійти",
+  "sign_in_to_try": "Увійдіть, щоб спробувати увесь функціонал",
+  "create_new_account": "Створити акаунт",
+  "continue": "Продовжити",
+  "skip": "Пропустити"
 }
