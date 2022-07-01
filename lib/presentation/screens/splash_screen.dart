@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,7 @@ import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
+import 'package:my_crypto/presentation/widgets/snackbar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,11 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         await Future.delayed(const Duration(seconds: 1));
         getIt<AppRouter>().replaceNamed('onBoarding');
       } else if (state is AuthorizationErrorState) {
-        Flushbar(
-          title: "Error",
-          message: "Something went wrong...",
-          duration: const Duration(seconds: 3),
-        ).show(context);
+        CustomSnackBar.showSnackNar(context, 'Error', 'Something went wrong...');
       }
     }, child: Builder(
       builder: (context) {
@@ -44,12 +40,11 @@ class _SplashScreenState extends State<SplashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    width: 120,
-                    height: 120,
+                    width: 130,
+                    height: 130,
                     child: Image.asset(
                       'assets/logo.png',
-                      width: 120,
-                      height: 120,
+                      fit: BoxFit.cover,
                     ),
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     clipBehavior: Clip.hardEdge),

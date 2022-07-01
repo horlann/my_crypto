@@ -9,8 +9,9 @@ class RoundedInputField extends StatefulWidget {
   final IconData? suffixIcon;
   final String? hint;
   final bool isPassword;
+  final bool isPasswordCanBeVisible;
   final Function(String callback) callback;
-  final int maxLenght;
+  final int maxLength;
   final int maxLines;
 
   const RoundedInputField(
@@ -19,7 +20,8 @@ class RoundedInputField extends StatefulWidget {
       this.hint = '',
       required this.callback,
       this.isPassword = false,
-      this.maxLenght = 30,
+      this.isPasswordCanBeVisible = true,
+      this.maxLength = 30,
       this.maxLines = 1,
       this.suffixIcon})
       : super(key: key);
@@ -54,7 +56,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
         onChanged: widget.callback,
         maxLines: widget.maxLines,
         textAlign: TextAlign.start,
-        inputFormatters: [LengthLimitingTextInputFormatter(widget.maxLenght)],
+        inputFormatters: [LengthLimitingTextInputFormatter(widget.maxLength)],
         style: TextStyle(color: theme.infoTextColor),
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
@@ -67,22 +69,21 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
           contentPadding: EdgeInsets.zero,
           alignLabelWithHint: true,
           isCollapsed: true,
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                isPasswordHiden = !isPasswordHiden;
-              });
-            },
-            child: widget.isPassword
-                ? Icon(
+          suffixIcon: (widget.isPassword && widget.isPasswordCanBeVisible)
+              ? GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isPasswordHiden = !isPasswordHiden;
+                    });
+                  },
+                  child: Icon(
                     isPasswordHiden ? Icons.visibility : Icons.visibility_off,
                     color: theme.infoTextColor,
-                  )
-                : Icon(
-                    widget.suffixIcon,
-                    color: theme.infoTextColor,
-                  ),
-          ),
+                  ))
+              : Icon(
+                  widget.suffixIcon,
+                  color: theme.infoTextColor,
+                ),
           border: InputBorder.none,
         ),
       ),

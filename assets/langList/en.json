@@ -11,5 +11,9 @@
   "sign_in_to_try": "Sign in to try all functionality",
   "create_new_account": "Create New Account",
   "continue": "Continue",
-  "skip": "Skip"
+  "skip": "Skip",
+  "phone_number": "Phone Number",
+  "email": "Email",
+  "repeat_password": "Repeat Password",
+  "name_and_surname": "Name and Surname"
 }

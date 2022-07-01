@@ -61,7 +61,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     emit(state.inProgress());
     try {
       final registerResult = await _userSignUpUseCase.call(SignUpParams(UserEntity(
-          email: 'tortos124@gmail.com', imageLink: '', name: 'Danil', password: '123456', uuid: const Uuid().v4())));
+          email: event.email,
+          imageLink: '',
+          name: event.nameAndSurname,
+          password: event.password,
+          uuid: const Uuid().v4())));
       registerResult.fold((l) => emit(state.authorizationErrorState(LoginErrors.unhandledError)),
           (r) => emit(state.authorized(userEntity: r)));
     } catch (e) {

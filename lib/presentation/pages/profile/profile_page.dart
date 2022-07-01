@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:my_crypto/presentation/blocs/user/user_state.dart';
 import 'package:my_crypto/presentation/pages/profile/widgets/unauthorized_profile_body.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
+import 'package:my_crypto/presentation/widgets/snackbar.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/authorized_profile_body.dart';
@@ -38,11 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is AuthorizationErrorState) {
-          Flushbar(
-            title: "Registration error",
-            message: "Something went wrong...",
-            duration: const Duration(seconds: 3),
-          ).show(context);
+          CustomSnackBar.showSnackNar(context, 'Registration error', 'Something went wrong...');
         }
       },
       builder: (context, state) {
@@ -91,11 +87,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       InkWell(
                         onTap: () {
-                          Flushbar(
-                            title: "Not so quickly",
-                            message: "If you want to log out please hold down",
-                            duration: const Duration(seconds: 3),
-                          ).show(context);
+                          CustomSnackBar.showSnackNar(
+                              context, 'Not so quickly', 'If you want to log out please hold down');
                         },
                         onLongPress: () {
                           _userBloc.add(const LogoutEvent());

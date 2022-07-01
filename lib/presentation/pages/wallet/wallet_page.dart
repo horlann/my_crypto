@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:my_crypto/presentation/pages/profile/widgets/authorized_profile_
 import 'package:my_crypto/presentation/pages/profile/widgets/unauthorized_profile_body.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
+import 'package:my_crypto/presentation/widgets/snackbar.dart';
 import 'package:provider/provider.dart';
 
 class WalletPage extends StatefulWidget {
@@ -32,11 +32,7 @@ class _WalletPageState extends State<WalletPage> {
     return BlocConsumer<UserBloc, UserState>(
       listener: (context, state) {
         if (state is AuthorizationErrorState) {
-          Flushbar(
-            title: "Registration error",
-            message: "Something went wrong...",
-            duration: const Duration(seconds: 3),
-          ).show(context);
+          CustomSnackBar.showSnackNar(context, "Registration error", "Something went wrong...");
         }
       },
       builder: (context, state) {

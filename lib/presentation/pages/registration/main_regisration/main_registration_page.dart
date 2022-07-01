@@ -1,12 +1,19 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
 import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
 import 'package:my_crypto/presentation/blocs/user/user_event.dart';
+import 'package:my_crypto/presentation/blocs/user/user_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
+import 'package:my_crypto/presentation/utils/validators.dart';
 import 'package:my_crypto/presentation/widgets/background.dart';
+import 'package:my_crypto/presentation/widgets/main_rounded_button.dart';
 import 'package:my_crypto/presentation/widgets/rounded_text_field.dart';
+import 'package:my_crypto/presentation/widgets/snackbar.dart';
 import 'package:provider/provider.dart';
 
 class MainRegistrationPage extends StatefulWidget {
@@ -17,18 +24,16 @@ class MainRegistrationPage extends StatefulWidget {
 }
 
 class _MainRegistrationPageState extends State<MainRegistrationPage> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  String _nameAndSurname = '';
+  String _email = '';
+  String _password = '';
+  String _password2 = '';
 
   late AbstractTheme _theme;
   late UserBloc _userBloc;
 
   @override
   void dispose() {
-    _usernameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
@@ -57,55 +62,94 @@ class _MainRegistrationPageState extends State<MainRegistrationPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const Spacer(
+            flex: 2,
+          ),
+          AutoSizeText(
+            easy_local.tr('create_new_account'),
+            minFontSize: 16,
+            maxFontSize: 22,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: _theme.infoTextColor),
+          ),
           const Spacer(),
           const SizedBox(
             height: 15,
           ),
-          RoundedInputField(callback: (String text) {}),
+          RoundedInputField(
+            callback: (String text) {
+              _nameAndSurname = text;
+            },
+            hint: easy_local.tr('name_and_surname'),
+          ),
           const SizedBox(height: 15),
-          RoundedInputField(callback: (String text) {}),
+          RoundedInputField(
+            callback: (String text) {
+              _email = text;
+            },
+            icon: Icons.email,
+            hint: easy_local.tr('email'),
+          ),
           const SizedBox(height: 15),
-          RoundedInputField(callback: (String text) {}),
+          // RoundedInputField(
+          //   callback: (String text) {},
+          //   icon: Icons.phone,
+          //   hint: easy_local.tr('phone_number'),
+          // ),
+          // const SizedBox(height: 15),
+          RoundedInputField(
+              callback: (String text) {
+                _password = text;
+              },
+              icon: Icons.password,
+              isPassword: true,
+              hint: easy_local.tr('password'),
+              isPasswordCanBeVisible: false),
           const SizedBox(height: 15),
-          RoundedInputField(callback: (String text) {}),
+          RoundedInputField(
+              callback: (String text) {
+                _password2 = text;
+              },
+              icon: Icons.password,
+              isPassword: true,
+              hint: easy_local.tr('repeat_password'),
+              isPasswordCanBeVisible: false),
           const SizedBox(
             height: 30,
           ),
-          GestureDetector(
-            onTap: () {
-              submitSignIn();
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return MainRoundedButton(
+                  text: easy_local.tr('sign_up'),
+                  color: _theme.accentColor,
+                  callback: () {
+                    _submitSignUp(context);
+                  },
+                  isLoading: state is InProgressAuthState,
+                  theme: _theme,
+                  paddingVert: 16);
             },
-            child: Container(
-              height: 45,
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 2,
-              decoration: BoxDecoration(
-                color: Colors.deepOrange.withOpacity(.8),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: const Text(
-                "Create New Account",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-            ),
           ),
-          const Spacer(),
+          const Spacer(
+            flex: 3,
+          ),
         ],
       ),
     );
   }
 
-  void submitSignIn() {
-    if (_usernameController.text.isNotEmpty &&
-        _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty) {
-      _userBloc.add(RegisterWithEmailAndPassword(_emailController.text, _passwordController.text));
-      // BlocProvider.of<UserCubit>(context).submitSignUp(user: UserEntity(
-      //   email: _emailController.text,
-      //   password: _passwordController.text,
-      // ));
+  void _submitSignUp(BuildContext context) {
+    if (_nameAndSurname.length > 3 && _email.isValidEmail) {
+      if (_password == _password2) {
+        if (_password.length > 5) {
+          _userBloc.add(RegisterWithEmailAndPassword(_email, _password, _nameAndSurname));
+        } else {
+          CustomSnackBar.showSnackNar(context, 'Error', 'Small Password');
+        }
+      } else {
+        CustomSnackBar.showSnackNar(context, 'Error', 'Passwords do not match');
+      }
+    } else {
+      CustomSnackBar.showSnackNar(context, 'Error', 'Input valid data');
     }
   }
 }

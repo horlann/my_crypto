@@ -26,9 +26,10 @@ class LogoutEvent extends UserEvent {
 class RegisterWithEmailAndPassword extends UserEvent {
   final String email;
   final String password;
+  final String nameAndSurname;
 
-  const RegisterWithEmailAndPassword(this.email, this.password);
+  const RegisterWithEmailAndPassword(this.email, this.password, this.nameAndSurname);
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password, nameAndSurname];
 }

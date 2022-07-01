@@ -1,4 +1,3 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:easy_localization/easy_localization.dart' as easy_local;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +13,7 @@ import 'package:my_crypto/presentation/utils/validators.dart';
 import 'package:my_crypto/presentation/widgets/background.dart';
 import 'package:my_crypto/presentation/widgets/main_rounded_button.dart';
 import 'package:my_crypto/presentation/widgets/rounded_text_field.dart';
+import 'package:my_crypto/presentation/widgets/snackbar.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,23 +52,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   getIt<AppRouter>().replaceNamed('mainRoute');
                 } else if (state is AuthorizationErrorState) {
                   if (state.error == LoginErrors.incorrectLoginOrPassword) {
-                    Flushbar(
-                      title: "Error",
-                      message: "Incorrect  password or email!",
-                      duration: const Duration(seconds: 3),
-                    ).show(context);
+                    CustomSnackBar.showSnackNar(context, 'Error', 'Incorrect  password or email!');
                   } else if (state.error == LoginErrors.tooMuchRequests) {
-                    Flushbar(
-                      title: "Error",
-                      message: "Too much requests,try again later",
-                      duration: const Duration(seconds: 3),
-                    ).show(context);
+                    CustomSnackBar.showSnackNar(context, 'Error', 'Too much requests,try again later');
                   } else {
-                    Flushbar(
-                      title: "Error",
-                      message: "Something went wrong...",
-                      duration: const Duration(seconds: 3),
-                    ).show(context);
+                    CustomSnackBar.showSnackNar(context, 'Error', 'Something went wrong...');
                   }
                 }
               },
@@ -105,11 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (password.length > 5 && email.isValidEmail) {
                             userBloc.add(LoginWithEmailAndPasswordEvent(email, password));
                           } else {
-                            Flushbar(
-                              title: "Error",
-                              message: "Enter valid password or email!",
-                              duration: const Duration(seconds: 3),
-                            ).show(context);
+                            CustomSnackBar.showSnackNar(context, 'Error', 'Enter valid password or email!');
                           }
                         }
                       },
