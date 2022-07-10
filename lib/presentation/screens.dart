@@ -7,8 +7,8 @@ import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/presentation/blocs/app_starter/app_starter_bloc.dart';
 import 'package:my_crypto/presentation/blocs/app_starter/app_starter_event.dart';
 import 'package:my_crypto/presentation/blocs/app_starter/app_starter_state.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_event.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_event.dart';
 import 'package:my_crypto/presentation/screens/splash_screen.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
@@ -35,8 +35,8 @@ class ScreenSelector extends StatelessWidget {
             bool canLoadFarther = (state as CanStartAppState).result;
             return canLoadFarther
                 ? BlocProvider(
-                    lazy: false,
-                    create: (BuildContext context) => getIt<UserBloc>()..add(InitUserEvent()),
+              lazy: false,
+                    create: (BuildContext context) => getIt<AuthBloc>()..add(InitUserEvent()),
                     child: Builder(builder: (context) {
                       return AutoRouter(
                         placeholder: (context) => const SplashScreenPlaceHolder(),

@@ -4,9 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_event.dart';
-import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/blocs/auth/bloc.dart';
 import 'package:my_crypto/presentation/pages/profile/widgets/unauthorized_profile_body.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
@@ -24,18 +22,18 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late AbstractTheme _theme;
-  late UserBloc _userBloc;
+  late AuthBloc _userBloc;
 
   @override
   void didChangeDependencies() {
     _theme = Provider.of<ThemesBloc>(context).theme;
-    _userBloc = Provider.of<UserBloc>(context);
+    _userBloc = Provider.of<AuthBloc>(context);
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserBloc, UserState>(
+    return BlocConsumer<AuthBloc, UserState>(
       listener: (context, state) {
         if (state is AuthorizationErrorState) {
           CustomSnackBar.showSnackNar(context, 'Registration error', 'Something went wrong...');

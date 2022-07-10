@@ -15,10 +15,10 @@ import '../../domain/use_cases/application/get_is_on_boarding_shown.dart' as _i1
 import '../../domain/use_cases/application/get_theme_usecase.dart' as _i4;
 import '../../domain/use_cases/application/set_is_on_boarding_shown.dart' as _i14;
 import '../../domain/use_cases/application/update_theme_usecase.dart' as _i13;
-import '../../domain/use_cases/user/get_current_user_usecase.dart' as _i8;
-import '../../domain/use_cases/user/user_sign_in_usecase.dart' as _i15;
-import '../../domain/use_cases/user/user_sign_out_usecase.dart' as _i16;
-import '../../domain/use_cases/user/user_sign_up_usecase.dart' as _i17;
+import '../../domain/use_cases/auth/get_current_user_usecase.dart' as _i8;
+import '../../domain/use_cases/auth/user_sign_in_usecase.dart' as _i15;
+import '../../domain/use_cases/auth/user_sign_out_usecase.dart' as _i16;
+import '../../domain/use_cases/auth/user_sign_up_usecase.dart' as _i17;
 import '../../services/app_module.dart' as _i18;
 import '../../services/firebase.dart' as _i7;
 import '../connection_checker.dart' as _i6;

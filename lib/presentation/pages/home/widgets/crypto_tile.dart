@@ -24,11 +24,10 @@ class CryptoTile extends StatelessWidget {
       child: Container(
           height: 75,
           decoration: BoxDecoration(
-              boxShadow: [theme.appShadows.mediumShadow],
-              color: theme.cardColor,
-              borderRadius: const BorderRadius.all(Radius.circular(16))),
+            boxShadow: [theme.appShadows.mediumShadow],
+            color: theme.cardColor,
+          ),
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-          margin: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               Expanded(

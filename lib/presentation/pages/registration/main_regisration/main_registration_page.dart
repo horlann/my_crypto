@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_event.dart';
-import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_event.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:my_crypto/presentation/utils/validators.dart';
@@ -30,7 +30,7 @@ class _MainRegistrationPageState extends State<MainRegistrationPage> {
   String _password2 = '';
 
   late AbstractTheme _theme;
-  late UserBloc _userBloc;
+  late AuthBloc _userBloc;
 
   @override
   void dispose() {
@@ -41,7 +41,7 @@ class _MainRegistrationPageState extends State<MainRegistrationPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _theme = Provider.of<ThemesBloc>(context).theme;
-    _userBloc = Provider.of<UserBloc>(context);
+    _userBloc = Provider.of<AuthBloc>(context);
   }
 
   @override
@@ -116,7 +116,7 @@ class _MainRegistrationPageState extends State<MainRegistrationPage> {
           const SizedBox(
             height: 30,
           ),
-          BlocBuilder<UserBloc, UserState>(
+          BlocBuilder<AuthBloc, UserState>(
             builder: (context, state) {
               return MainRoundedButton(
                   text: easy_local.tr('sign_up'),

@@ -15,5 +15,6 @@
   "phone_number": "Phone Number",
   "email": "Email",
   "repeat_password": "Repeat Password",
-  "name_and_surname": "Name and Surname"
+  "name_and_surname": "Name and Surname",
+  "add_to_favorite": "Add to Favorite"
 }

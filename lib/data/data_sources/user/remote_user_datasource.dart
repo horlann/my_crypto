@@ -11,6 +11,8 @@ import 'package:my_crypto/main.dart';
 abstract class IRemoteUserDataSource {
   Future<Either<Failure, UserEntity>> signIn(String email, String password);
 
+  Future<Either<Failure, UserTableModel>> updateUser(UserTableModel userModel);
+
   Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity);
 
   Future<Either<Failure, bool>> logout();
@@ -33,7 +35,7 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
         final userCollectionRef = firestore.collection("users");
         final uuid = auth.currentUser!.uid;
         await userCollectionRef.doc(uuid).get().then((value) {
-          userEntity = UserModel.fromSnapshot(value);
+          userEntity = UserTableModel.fromSnapshot(value);
         });
         if (userEntity != null) {
           return Right(userEntity!);
@@ -70,7 +72,7 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
         final uuid = auth.currentUser!.uid;
         try {
           UserEntity userEntity = await userCollectionRef.doc(uuid).get().then((value) {
-            return UserModel.fromSnapshot(value);
+            return UserTableModel.fromSnapshot(value);
           });
           return Right(userEntity);
         } catch (e) {
@@ -81,6 +83,19 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
         return const Right(null);
       }
     } on Exception catch (e) {
+      logger.e(e);
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserTableModel>> updateUser(UserTableModel userModel) async {
+    try {
+      final userCollectionRef = firestore.collection("users");
+      final uuid = auth.currentUser!.uid;
+      await userCollectionRef.doc(uuid).set(userModel.toDocument());
+      return Right(userModel);
+    } catch (e) {
       logger.e(e);
       return Left(ServerFailure());
     }
@@ -106,7 +121,7 @@ class RemoteUserDataSource extends IRemoteUserDataSource {
         final userCollectionRef = firestore.collection("users");
         final uuid = auth.currentUser!.uid;
         await userCollectionRef.doc(uuid).get().then((value) {
-          final newUser = UserModel(
+          final newUser = UserTableModel(
                   uuid: uuid,
                   email: userEntity.email,
                   name: userEntity.name,

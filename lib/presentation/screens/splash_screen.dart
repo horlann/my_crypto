@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:my_crypto/presentation/widgets/snackbar.dart';
@@ -20,7 +20,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(listener: (context, state) async {
+    return BlocListener<AuthBloc, UserState>(listener: (context, state) async {
       if (state is AuthorizedState || state is UnauthorizedState || state is AuthorizationErrorState) {
         await Future.delayed(const Duration(seconds: 1));
         getIt<AppRouter>().replaceNamed('onBoarding');

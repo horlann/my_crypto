@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:my_crypto/data/api/models/user_model.dart';
 import 'package:my_crypto/data/data_sources/user/remote_user_datasource.dart';
 import 'package:my_crypto/domain/entities/user/user_entity.dart';
 import 'package:my_crypto/domain/repositories/user/i_remote_user_repo.dart';
@@ -12,6 +13,11 @@ class UserRepository extends IUserRepository {
   @override
   Future<Either<Failure, UserEntity?>> loadUser() {
     return dataSource.loadUser();
+  }
+
+  @override
+  Future<Either<Failure, UserEntity?>> updateUser(UserEntity userEntity) async {
+    return await dataSource.updateUser(UserTableModel.fromEntity(userEntity));
   }
 
   @override

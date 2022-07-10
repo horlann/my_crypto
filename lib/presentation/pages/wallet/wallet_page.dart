@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_state.dart';
 import 'package:my_crypto/presentation/pages/profile/widgets/authorized_profile_body.dart';
 import 'package:my_crypto/presentation/pages/profile/widgets/unauthorized_profile_body.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
@@ -18,18 +18,18 @@ class WalletPage extends StatefulWidget {
 
 class _WalletPageState extends State<WalletPage> {
   late AbstractTheme _theme;
-  late UserBloc _userBloc;
+  late AuthBloc _userBloc;
 
   @override
   void didChangeDependencies() {
     _theme = Provider.of<ThemesBloc>(context).theme;
-    _userBloc = Provider.of<UserBloc>(context);
+    _userBloc = Provider.of<AuthBloc>(context);
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserBloc, UserState>(
+    return BlocConsumer<AuthBloc, UserState>(
       listener: (context, state) {
         if (state is AuthorizationErrorState) {
           CustomSnackBar.showSnackNar(context, "Registration error", "Something went wrong...");

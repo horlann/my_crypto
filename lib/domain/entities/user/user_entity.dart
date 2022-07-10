@@ -1,9 +1,12 @@
+import 'package:my_crypto/data/api/models/user_model.dart';
+
 class UserEntity {
   final String uuid;
   final String name;
   final String imageLink;
   final String email;
   final String password;
+  final List<String> favouriteCoins; //listt of their slugs
 
 //<editor-fold desc="Data Methods">
 
@@ -13,9 +16,10 @@ class UserEntity {
     required this.imageLink,
     required this.email,
     required this.password,
+    required this.favouriteCoins,
   });
 
-  @override
+//lis@override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is UserEntity &&
@@ -24,19 +28,22 @@ class UserEntity {
           name == other.name &&
           imageLink == other.imageLink &&
           email == other.email &&
-          password == other.password);
+          password == other.password &&
+          favouriteCoins == other.favouriteCoins);
 
   @override
-  int get hashCode => uuid.hashCode ^ name.hashCode ^ imageLink.hashCode ^ email.hashCode ^ password.hashCode;
+  int get hashCode =>
+      uuid.hashCode ^ name.hashCode ^ imageLink.hashCode ^ email.hashCode ^ password.hashCode ^ favouriteCoins.hashCode;
 
   @override
   String toString() {
-    return 'UserEntity{'
-            ' uuid: $uuid,' +
+    return 'UserEntity{' +
+        ' uuid: $uuid,' +
         ' name: $name,' +
         ' imageLink: $imageLink,' +
         ' email: $email,' +
         ' password: $password,' +
+        ' favouriteCoins: $favouriteCoins,' +
         '}';
   }
 
@@ -46,6 +53,7 @@ class UserEntity {
     String? imageLink,
     String? email,
     String? password,
+    List<String>? favouriteCoins,
   }) {
     return UserEntity(
       uuid: uuid ?? this.uuid,
@@ -53,28 +61,20 @@ class UserEntity {
       imageLink: imageLink ?? this.imageLink,
       email: email ?? this.email,
       password: password ?? this.password,
+      favouriteCoins: favouriteCoins ?? this.favouriteCoins,
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'uuid': uuid,
-      'name': name,
-      'imageLink': imageLink,
-      'email': email,
-      'password': password,
-    };
-  }
-
-  factory UserEntity.fromMap(Map<String, dynamic> map) {
-    return UserEntity(
-      uuid: map['uuid'] as String,
-      name: map['name'] as String,
-      imageLink: map['imageLink'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
+  factory UserEntity.fromTableModel(UserTableModel userTableModel) {
+    return UserTableModel(
+      name: userTableModel.name,
+      uuid: userTableModel.uuid,
+      email: userTableModel.email,
+      imageLink: userTableModel.imageLink,
+      favouriteCoins: userTableModel.favouriteCoins,
     );
   }
 
 //</editor-fold>
+
 }

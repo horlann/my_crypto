@@ -7,6 +7,8 @@ abstract class IUserRepository {
 
   Future<Either<Failure, UserEntity?>> loadUser();
 
+  Future<Either<Failure, UserEntity?>> updateUser(UserEntity userEntity);
+
   Future<Either<Failure, UserEntity>> signUp(UserEntity userEntity);
 
   Future<Either<Failure, UserEntity>> signIn(String email, String password);

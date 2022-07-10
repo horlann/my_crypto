@@ -7,12 +7,12 @@ import 'package:my_crypto/internal/core/usecases.dart';
 
 @lazySingleton
 class GetCurrentUserUseCase extends UseCase<UserEntity?, NoParams> {
-  final IUserRepository repository;
+  final IUserRepository _repository;
 
-  GetCurrentUserUseCase(this.repository);
+  GetCurrentUserUseCase(this._repository);
 
   @override
   Future<Either<Failure, UserEntity?>> call(NoParams params) {
-    return repository.loadUser();
+    return _repository.loadUser();
   }
 }

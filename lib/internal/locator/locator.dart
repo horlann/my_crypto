@@ -11,7 +11,7 @@ import 'package:my_crypto/domain/repositories/i_application_repo.dart';
 import 'package:my_crypto/domain/repositories/user/i_remote_user_repo.dart';
 import 'package:my_crypto/internal/locator/locator.config.dart';
 import 'package:my_crypto/presentation/blocs/app_starter/app_starter_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt getIt = GetIt.instance;
@@ -21,7 +21,7 @@ Future<void> setupLocators(String environment) async {
   final gh = GetItHelper(getIt, environment);
   await $initGetIt(getIt, environment: environment);
   //blocs
-  gh.factory<UserBloc>(() => UserBloc(getIt.call(), getIt.call(), getIt.call(), getIt.call()));
+  gh.factory<AuthBloc>(() => AuthBloc(getIt.call(), getIt.call(), getIt.call(), getIt.call()));
   gh.factory<AppStarterBloc>(() => AppStarterBloc(getIt.call(), getIt.call()));
 
   //useCases

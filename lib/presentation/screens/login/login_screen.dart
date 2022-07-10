@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:my_crypto/internal/locator/locator.dart';
 import 'package:my_crypto/internal/navigation/router.gr.dart';
-import 'package:my_crypto/presentation/blocs/user/user_bloc.dart';
-import 'package:my_crypto/presentation/blocs/user/user_event.dart';
-import 'package:my_crypto/presentation/blocs/user/user_state.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_bloc.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_event.dart';
+import 'package:my_crypto/presentation/blocs/auth/user_state.dart';
 import 'package:my_crypto/presentation/utils/themes/abstract_theme.dart';
 import 'package:my_crypto/presentation/utils/themes/bloc/themes_bloc.dart';
 import 'package:my_crypto/presentation/utils/validators.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     AbstractTheme theme = Provider.of<ThemesBloc>(context).theme;
-    UserBloc userBloc = Provider.of<UserBloc>(context);
+    AuthBloc userBloc = Provider.of<AuthBloc>(context);
 
     Size size = MediaQuery.of(context).size;
     return Background(
@@ -46,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Container(
             height: size.height,
             padding: const EdgeInsets.fromLTRB(30.0, 30, 30, 0),
-            child: BlocConsumer<UserBloc, UserState>(
+            child: BlocConsumer<AuthBloc, UserState>(
               listener: (context, state) {
                 if (state is AuthorizedState) {
                   getIt<AppRouter>().replaceNamed('mainRoute');

@@ -15,5 +15,6 @@
   "phone_number": "Номер телефона",
   "email": "Эл.почта",
   "repeat_password": "Повторите Пароль",
-  "name_and_surname": "Имя и Фамилия"
+  "name_and_surname": "Имя и Фамилия",
+  "add_to_favorite": "Добавить в избранное"
 }
